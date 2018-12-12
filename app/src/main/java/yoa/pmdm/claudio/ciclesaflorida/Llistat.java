@@ -4,10 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 public class Llistat extends Fragment {
@@ -16,8 +19,8 @@ public class Llistat extends Fragment {
     private TextView mensaje;
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int mParam1;
+    private ArrayList<Ciclo> mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -25,11 +28,11 @@ public class Llistat extends Fragment {
         // Required empty public constructor
     }
 
-    public static Llistat newInstance(String param1, String param2) {
+    public static Llistat newInstance(int param1, ArrayList<Ciclo>param2) {
         Llistat fragment = new Llistat();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_PARAM1, param1);
+        args.putParcelableArrayList(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,8 +41,8 @@ public class Llistat extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getInt(ARG_PARAM1);
+            mParam2 = getArguments().getParcelableArrayList(ARG_PARAM2);
         }
     }
 
@@ -49,6 +52,8 @@ public class Llistat extends Fragment {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_llistat, container, false);
         mensaje= v.findViewById(R.id.txtMensaje);
+        Leer();
+
         return v;
     }
 
@@ -69,13 +74,30 @@ public class Llistat extends Fragment {
         mListener = null;
     }
 
+    public void Leer(){
+        mensaje.setText("");
+        Log.d("MIO", "Antes For");
+
+        if (mParam2!=null)
+        {
+            for(int i=0;i<mParam2.size();i++) {
+                if (mParam1==1 && mParam2.get(i).getTipus()=="Mitjà")
+                {
+                    mensaje.setText(mensaje.getText()+mParam2.get(i).toString()+"\n"+"\n");
+                }
+                else if(mParam1==2 && mParam2.get(i).getTipus()=="Superior")
+                {
+                    mensaje.setText(mensaje.getText()+mParam2.get(i).toString()+"\n"+"\n");
+                }
+            }
+        }
+        else
+        {
+            Log.d("MIO","Era null");
+        }
+    }
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-    public void introducirMensaje(String mensa){
-        mensaje.setText(mensa);
-    }
-
 }

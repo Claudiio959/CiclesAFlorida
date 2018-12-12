@@ -11,6 +11,8 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TipusCicle.comunicaTipoCiclo,Titulaciones.comunicaTitulacion, Llistat.OnFragmentInteractionListener{
+    final String TAG="MIO";
+
     FragmentManager fm;
     FragmentTransaction ft;
     Titulaciones fragmentArriba;
@@ -30,13 +32,13 @@ public class MainActivity extends AppCompatActivity implements TipusCicle.comuni
         btn2 = false;
         fm = getSupportFragmentManager();
         fragmentCentro = TipusCicle.newInstance(btn1,btn2);
-        fragmentAbajo = Llistat.newInstance("","");
+        fragmentAbajo = Llistat.newInstance(0,null);
         fragmentArriba = (Titulaciones) fm.findFragmentById(R.id.fragment);
 
         ft= fm.beginTransaction();
 
-        ft.add(R.id.fmedio,fragmentCentro);
-        ft.add(R.id.fabajo,fragmentAbajo);
+        ft.replace(R.id.fmedio,fragmentCentro);
+        ft.replace(R.id.fabajo,fragmentAbajo);
 
         ft.commit();
 
@@ -45,7 +47,13 @@ public class MainActivity extends AppCompatActivity implements TipusCicle.comuni
 
     @Override
     public void tipoCicloPulsado(int id) {
+        Log.d(TAG,"Ciclo "+id);
+        ft= fm.beginTransaction();
 
+        fragmentAbajo= Llistat.newInstance(id,arrayAux);
+        ft.replace(R.id.fabajo,fragmentAbajo);
+
+        ft.commit();
     }
 
     @Override
@@ -53,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements TipusCicle.comuni
         recorrerArray(id);
         ft= fm.beginTransaction();
 
-        Fragment auxFrag = TipusCicle.newInstance(btn1,btn2);
-        ft.add(R.id.fmedio,auxFrag);
+        fragmentCentro = TipusCicle.newInstance(btn1,btn2);
+        ft.replace(R.id.fmedio,fragmentCentro);
 
         ft.commit();
         btn1 = false;
@@ -90,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements TipusCicle.comuni
 
     public void recorrerArray(int id)
     {
+        Log.d(TAG, ""+id);
         arrayAux = new ArrayList<Ciclo>();
         switch (id){
             case 1:
@@ -97,12 +106,15 @@ public class MainActivity extends AppCompatActivity implements TipusCicle.comuni
                 {
                     if (aux.getFamiliaProfessional() == "EMPRESA")
                     {
+                        Log.d(TAG, aux.getFamiliaProfessional());
                         if (aux.getTipus()=="Mitjà")
                         {
+                            Log.d(TAG, "Mitja");
                             btn1 = true;
                         }
                         if (aux.getTipus()=="Superior")
                         {
+                            Log.d(TAG, "superior");
                             btn2 = true;
                         }
                         arrayAux.add(aux);

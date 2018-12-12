@@ -12,20 +12,20 @@
 
 
         <Button
-            android:id="@+id/empresa"
+            android:id="@+id/esports"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:text="Esports" />
 
         <Button
-            android:id="@+id/esports"
+            android:id="@+id/informatica"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Informática" />
 
         <Button
-            android:id="@+id/informatica"
+            android:id="@+id/empresa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Empresa" />

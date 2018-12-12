@@ -68,6 +68,9 @@ public class TipusCicle extends Fragment implements View.OnClickListener {
             superior.setEnabled(false);
         }
 
+        mitja.setOnClickListener(this);
+        superior.setOnClickListener(this);
+
         return v;
 
     }

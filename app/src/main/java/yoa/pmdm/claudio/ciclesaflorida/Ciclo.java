@@ -81,4 +81,14 @@ public class Ciclo implements Parcelable {
     public void setDescripcio(String descripcio) {
         Descripcio = descripcio;
     }
+
+    @Override
+    public String toString() {
+        return "Ciclo{" +
+                "familiaProfessional='" + familiaProfessional + '\'' +
+                ", tipus='" + tipus + '\'' +
+                ", titol='" + titol + '\'' +
+                ", Descripcio='" + Descripcio + '\'' +
+                '}';
+    }
 }
